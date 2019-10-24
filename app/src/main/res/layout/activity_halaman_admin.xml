@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HalamanAdminActivity">
+
+    <ImageButton
+        android:id="@+id/daftarmatkul"
+        android:layout_width="110dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="276dp"
+        android:layout_marginTop="56dp"
+        android:scaleType="fitCenter"
+        android:onClick="DaftarMatkul"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/daftarmatkul" />
+
+    <ImageButton
+        android:id="@+id/kelolakrs"
+        android:layout_width="110dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="232dp"
+        android:scaleType="fitCenter"
+        android:onClick="KelolaKrs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/kelolakrs" />
+
+    <ImageButton
+        android:id="@+id/daftarmhs"
+        android:layout_width="110dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="232dp"
+        android:scaleType="fitCenter"
+        android:onClick="DaftarMhs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/daftarmhs2" />
+
+    <ImageButton
+        android:id="@+id/daftardosen"
+        android:layout_width="110dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="56dp"
+        android:scaleType="fitCenter"
+        android:onClick="DaftarDosen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/daftardosen" />
+
+    <ImageButton
+        android:id="@+id/datadiri"
+        android:layout_width="110dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="56dp"
+        android:scaleType="fitCenter"
+        android:onClick="DataDiri"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/datadiri" />
+
+    <TextView
+        android:id="@+id/dataDiri6"
+        android:layout_width="82dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="368dp"
+        android:layout_marginEnd="8dp"
+        android:text="Kelola KRS"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dataDiri7"
+        android:layout_width="119dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="364dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:text="Daftar Mahasiswa"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dataDiri"
+        android:layout_width="82dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="188dp"
+        android:layout_marginEnd="8dp"
+        android:text="DataDiri"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dataDiri2"
+        android:layout_width="131dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="188dp"
+        android:layout_marginEnd="8dp"
+        android:text="Daftar Matakuliah"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.969"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dataDiri3"
+        android:layout_width="110dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="188dp"
+        android:layout_marginEnd="8dp"
+        android:text="Daftar Dosen"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
