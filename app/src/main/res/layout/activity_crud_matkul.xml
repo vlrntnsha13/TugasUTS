@@ -139,14 +139,24 @@
         android:id="@+id/spinnerHari"
         android:layout_width="213dp"
         android:layout_height="32dp"
-        tools:layout_editor_absoluteX="157dp"
-        tools:layout_editor_absoluteY="230dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="228dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.818"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinnerSesi"
         android:layout_width="213dp"
         android:layout_height="32dp"
-        tools:layout_editor_absoluteX="157dp"
-        tools:layout_editor_absoluteY="288dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="288dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.818"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

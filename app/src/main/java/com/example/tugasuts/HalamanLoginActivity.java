@@ -13,7 +13,6 @@ public class HalamanLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getSupportActionBar().hide();
         setContentView(R.layout.activity_halaman_login);
 
         Button signin = (Button)findViewById(R.id.signin);

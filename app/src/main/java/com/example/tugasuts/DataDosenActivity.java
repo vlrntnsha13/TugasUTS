@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,12 +46,15 @@ public class DataDosenActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId() == R.id.create){
-            setContentView(R.layout.activity_crud_dosen);
+            Intent intent = new Intent(DataDosenActivity.this,CrudDosenActivity.class);
+            startActivity(intent);
         }if (item.getItemId() == R.id.update){
-            setContentView(R.layout.activity_crud_dosen);
+            Intent intent = new Intent(DataDosenActivity.this,CrudDosenActivity.class);
+            startActivity(intent);
 
         }if (item.getItemId() == R.id.delete){
-            setContentView(R.layout.activity_crud_dosen);
+            Intent intent = new Intent(DataDosenActivity.this,CrudDosenActivity.class);
+            startActivity(intent);
 
         }
         return true;

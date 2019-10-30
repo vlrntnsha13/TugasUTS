@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.Menu;
@@ -37,6 +38,8 @@ public class DataMatkulActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DataMatkulActivity.this);
         recmatkul.setLayoutManager(layoutManager);
         recmatkul.setAdapter(matkulAdapter);
+
+
     }
 
     @Override
@@ -49,12 +52,15 @@ public class DataMatkulActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId() == R.id.create){
-            setContentView(R.layout.activity_crud_matkul);
+            Intent intent = new Intent(DataMatkulActivity.this,CrudMatkulActivity.class);
+            startActivity(intent);
         }if (item.getItemId() == R.id.update){
-            setContentView(R.layout.activity_crud_matkul);
+            Intent intent = new Intent(DataMatkulActivity.this,CrudMatkulActivity.class);
+            startActivity(intent);
 
         }if (item.getItemId() == R.id.delete){
-            setContentView(R.layout.activity_crud_matkul);
+            Intent intent = new Intent(DataMatkulActivity.this,CrudMatkulActivity.class);
+            startActivity(intent);
 
         }
         return true;
