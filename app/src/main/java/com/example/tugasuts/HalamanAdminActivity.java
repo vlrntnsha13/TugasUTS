@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,8 +46,11 @@ public class HalamanAdminActivity extends AppCompatActivity {
                     })
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(HalamanAdminActivity.this, "Berhasil logout",
-                                    Toast.LENGTH_SHORT).show();
+                            SharedPreferences prefs = HalamanAdminActivity.this.getSharedPreferences("prefs_file",MODE_PRIVATE);
+                            String statusLogin = prefs.getString("isLogin",null );
+                            SharedPreferences.Editor edit = prefs.edit();
+                            edit.putString("isLogin", null);
+                            edit.commit();
                             Intent intent = new Intent(HalamanAdminActivity.this,HalamanLoginActivity.class);
                             startActivity(intent);
                         }
