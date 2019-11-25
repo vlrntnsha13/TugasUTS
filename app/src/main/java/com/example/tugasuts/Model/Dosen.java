@@ -1,28 +1,46 @@
 package com.example.tugasuts.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Dosen {
-    public int mhsImage;
+
+    @SerializedName("foto")
+    @Expose
+    private String foto;
+
+    @SerializedName("id")
+    @Expose
+    private String id;
+
+    @SerializedName("nama")
+    @Expose
     private String nama;
+
+    @SerializedName("nidn")
+    @Expose
     private String nidn;
+
+    @SerializedName("gelar")
+    @Expose
     private String gelar;
+
+    @SerializedName("email")
+    @Expose
     private String email;
+
+    @SerializedName("alamat")
+    @Expose
     private String alamat;
 
-    public Dosen(int mhsImage, String nama, String nidn, String gelar, String email, String alamat) {
-        this.mhsImage = mhsImage;
+    public Dosen(String foto, String id, String nama, String nidn, String gelar, String email, String alamat) {
+        this.setFoto(foto);
+        this.setId(id);
         this.nama = nama;
         this.setNidn(nidn);
         this.setGelar(gelar);
         this.setEmail(email);
         this.setAlamat(alamat);
-    }
-
-    public int getMhsImage() {
-        return mhsImage;
-    }
-
-    public void setMhsImage(int mhsImage) {
-        this.mhsImage = mhsImage;
     }
 
     public String getNama() {
@@ -32,7 +50,6 @@ public class Dosen {
         this.nama = nama;
 
     }
-
 
     public String getEmail() {
         return email;
@@ -65,5 +82,22 @@ public class Dosen {
 
     public void setGelar(String gelar) {
         this.gelar = gelar;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

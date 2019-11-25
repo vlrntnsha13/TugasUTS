@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tugasuts.Model.Dosen;
-import com.example.tugasuts.Model.Mahasiswa;
 import com.example.tugasuts.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -30,12 +30,23 @@ public class DosenAdapter  extends RecyclerView.Adapter<DosenAdapter.ViewHolder>
     public DosenAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.card_view_dosen, parent, false);
+        context = parent.getContext();
         return new DosenAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DosenAdapter.ViewHolder holder, final int position) {
-        holder.imagemhsImage.setImageResource(dosenArrayList.get(position).getMhsImage());
+        //holder.foto.setImageResource(dosenArrayList.get(position).getFoto());
+        //URL url = new URL("http://image10.bizrate-images.com/resize?sq=60&uild=2216744464");
+        //Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+        //imageView.setImage(bmp);
+        holder.foto.getLayoutParams().width = 100;
+        holder.foto.getLayoutParams().height = 100;
+        if (dosenArrayList.get(position).getFoto() !=null){
+            Picasso.with(this.context)
+                    .load(dosenArrayList.get(position).getFoto())
+                    .into(holder.foto);
+        }
         holder.txtNama.setText(dosenArrayList.get(position).getNama());
         holder.txtNim.setText(dosenArrayList.get(position).getNidn());
         holder.txtGelar.setText(dosenArrayList.get(position).getGelar());
@@ -50,7 +61,7 @@ public class DosenAdapter  extends RecyclerView.Adapter<DosenAdapter.ViewHolder>
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView imagemhsImage;
+        ImageView foto;
         TextView txtNama;
         TextView txtNim;
         TextView txtGelar;
@@ -59,8 +70,8 @@ public class DosenAdapter  extends RecyclerView.Adapter<DosenAdapter.ViewHolder>
 
         public ViewHolder(View view){
             super(view);
-            imagemhsImage = view.findViewById(R.id.imagemhsImage);
-            txtNama = view.findViewById(R.id.txtNama);
+            foto = view.findViewById(R.id.foto);
+            txtNama = view.findViewById(R.id.txtNamaMatkul);
             txtNim = view.findViewById(R.id.txtNidn);
             txtGelar = view.findViewById(R.id.txtGelar);
             txtEmail = view.findViewById(R.id.txtEmail);

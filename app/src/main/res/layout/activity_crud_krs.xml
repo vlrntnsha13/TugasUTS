@@ -76,7 +76,7 @@
         tools:text="ALPRO-1" />
 
     <EditText
-        android:id="@+id/nama2"
+        android:id="@+id/namaKRS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

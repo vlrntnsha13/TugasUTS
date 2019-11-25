@@ -56,8 +56,8 @@ public class MhsAdapter  extends RecyclerView.Adapter<MhsAdapter.ViewHolder> {
 
         public ViewHolder(View view){
             super(view);
-            imagemhsImage = view.findViewById(R.id.imagemhsImage);
-            txtNama = view.findViewById(R.id.txtNama);
+            imagemhsImage = view.findViewById(R.id.foto);
+            txtNama = view.findViewById(R.id.txtNamaMatkul);
             txtNim = view.findViewById(R.id.txtNim);
             txtEmail = view.findViewById(R.id.txtEmail);
             txtAlamat = view.findViewById(R.id.txtAlamat);

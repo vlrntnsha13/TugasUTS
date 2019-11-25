@@ -67,5 +67,13 @@ public class DaftarKRSActivity extends AppCompatActivity {
                 "1", "3", "Katon", "30"));
         krsArrayList.add(new Krs("SI123", "Algoritma dan Pemrograman", "Senin",
                 "1", "3", "Katon", "30"));
+        krsArrayList.add(new Krs("SI123", "Algoritma dan Pemrograman", "Senin",
+                "1", "3", "Katon", "30"));
+        krsArrayList.add(new Krs("SI123", "Algoritma dan Pemrograman", "Senin",
+                "1", "3", "Katon", "30"));
+        krsArrayList.add(new Krs("SI123", "Algoritma dan Pemrograman", "Senin",
+                "1", "3", "Katon", "30"));
+        krsArrayList.add(new Krs("SI123", "Algoritma dan Pemrograman", "Senin",
+                "1", "3", "Katon", "30"));
     }
 }
