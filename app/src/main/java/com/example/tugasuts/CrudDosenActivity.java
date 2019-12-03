@@ -3,12 +3,16 @@ package com.example.tugasuts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.loader.content.CursorLoader;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.tugasuts.Network.DefaultResult;
@@ -43,6 +48,10 @@ public class CrudDosenActivity extends AppCompatActivity {
     Boolean isUpdate = false;
     String idDosen;
 
+    private Uri uri;
+    private ImageView img;
+    private String encodedImageData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +63,7 @@ public class CrudDosenActivity extends AppCompatActivity {
         alamat = (EditText)findViewById(R.id.alamatDosen);
         email = (EditText)findViewById(R.id.emailDosen);
         gelar = (EditText)findViewById(R.id.gelarDosen);
+        img = findViewById(R.id.foto);
 
         Button browseButton = (Button)findViewById(R.id.foto);
         browseButton.setOnClickListener(browseButtonListener);
@@ -148,7 +158,7 @@ public class CrudDosenActivity extends AppCompatActivity {
         Call<DefaultResult> call = service.insert_dosen(nama.getText().toString(), nidn.getText().toString(),
                 alamat.getText().toString(),
                 email.getText().toString(), gelar.getText().toString(),
-                "https://source.unsplash.com/random", "72170143");
+                encodedImageData, "72170143");
         call.enqueue(new Callback<DefaultResult>() {
             @Override
             public void onResponse(Call<DefaultResult> call, Response<DefaultResult> response) {
@@ -174,7 +184,7 @@ public class CrudDosenActivity extends AppCompatActivity {
         Call<DefaultResult> call = service.update_dosen(idDosen, nama.getText().toString(), nidn.getText().toString(),
                 alamat.getText().toString(),
                 email.getText().toString(), gelar.getText().toString(),
-                "https://source.unsplash.com/random", "72170143");
+                encodedImageData, "72170143");
         call.enqueue(new Callback<DefaultResult>() {
             @Override
             public void onResponse(Call<DefaultResult> call, Response<DefaultResult> response) {
@@ -214,30 +224,40 @@ public class CrudDosenActivity extends AppCompatActivity {
     private View.OnClickListener browseButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            pilihfoto();
         }
     };
 
-    public static final int PICK_IMAGE = 1;
+    private static final int PICK_IMAGE = 1;
+    private static final int PERMISSION_REQUEST_STORAGE = 2;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Uri selectedImage = data.getData();
 
-        if (requestCode == PICK_IMAGE) {
-            //TODO: action
-
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                uri = data.getData();
+                img.setImageURI(uri);
+            }
+        }
+        if (uri != null) {
+            try {
+                String path = getRealPathFromURI(uri);
+                Bitmap bitmap= BitmapFactory.decodeFile(path);
+                encodedImageData=getEncoded64ImageStringFromBitmap(bitmap);
+                foto.setText(encodedImageData);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @SuppressLint("ObsoleteSdkInt")
-    public String getPathFromURI(Uri uri){
+    private String getRealPathFromURI(Uri contentURI) {
+
         String realPath="";
-    // SDK < API11
+// SDK < API11
         if (Build.VERSION.SDK_INT < 11) {
             String[] proj = { MediaStore.Images.Media.DATA };
             @SuppressLint("Recycle") Cursor cursor = getContentResolver().query(uri, proj, null, null, null);
@@ -280,6 +300,35 @@ public class CrudDosenActivity extends AppCompatActivity {
         return realPath;
     }
 
+    public String getEncoded64ImageStringFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        byte[] byteFormat = stream.toByteArray();
+        // get the base 64 string
+        String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
 
+        return imgString;
+    }
 
+    private void pilihfoto() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSION_REQUEST_STORAGE);
+
+        }else{
+            openGallery();
+        }
+    }
+
+    public void openGallery(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE);
+    }
 }
