@@ -1,44 +1,41 @@
 package com.example.tugasuts;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.loader.content.CursorLoader;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
 import com.example.tugasuts.Network.DefaultResult;
 import com.example.tugasuts.Network.GetDataService;
 import com.example.tugasuts.Network.RetrofitClientInstance;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class CrudDosenActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
@@ -49,8 +46,10 @@ public class CrudDosenActivity extends AppCompatActivity {
     String idDosen;
 
     private Uri uri;
-    private ImageView img;
-    private String encodedImageData;
+    private ImageView imgDosen;
+    String stringImg;
+    private static final int GALLERY_REQUEST_CODE = 58;
+    private static final int FILE_ACCESS_REQUEST_CODE = 58;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +57,21 @@ public class CrudDosenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crud_dosen);
         this.setTitle("SI KRS - Hai Admin");
 
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            }, FILE_ACCESS_REQUEST_CODE);
+        }
+
         nama = (EditText)findViewById(R.id.namaDosen);
         nidn = (EditText)findViewById(R.id.NIDN);
         alamat = (EditText)findViewById(R.id.alamatDosen);
         email = (EditText)findViewById(R.id.emailDosen);
         gelar = (EditText)findViewById(R.id.gelarDosen);
-        img = findViewById(R.id.foto);
+        foto = findViewById(R.id.namaFt);
+        imgDosen = findViewById(R.id.imgDosen);
 
-        Button browseButton = (Button)findViewById(R.id.foto);
+        final Button browseButton = findViewById(R.id.browse);
         browseButton.setOnClickListener(browseButtonListener);
 
         checkUpdate();
@@ -157,8 +163,9 @@ public class CrudDosenActivity extends AppCompatActivity {
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<DefaultResult> call = service.insert_dosen(nama.getText().toString(), nidn.getText().toString(),
                 alamat.getText().toString(),
-                email.getText().toString(), gelar.getText().toString(),
-                encodedImageData, "72170143");
+                email.getText().toString(),
+                gelar.getText().toString(),
+                stringImg, "72170143");
         call.enqueue(new Callback<DefaultResult>() {
             @Override
             public void onResponse(Call<DefaultResult> call, Response<DefaultResult> response) {
@@ -179,12 +186,16 @@ public class CrudDosenActivity extends AppCompatActivity {
 
     private void updateDataDosen() {
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        progressDialog = ProgressDialog.show(CrudDosenActivity.this, null, "Loading ...", true, false);
+        progressDialog = ProgressDialog.show(CrudDosenActivity.this, null,
+                "Loading ...", true, false);
 
-        Call<DefaultResult> call = service.update_dosen(idDosen, nama.getText().toString(), nidn.getText().toString(),
+        Call<DefaultResult> call = service.update_dosen(idDosen,
+                nama.getText().toString(),
+                nidn.getText().toString(),
                 alamat.getText().toString(),
-                email.getText().toString(), gelar.getText().toString(),
-                encodedImageData, "72170143");
+                email.getText().toString(),
+                gelar.getText().toString(),
+                stringImg, "72170143");
         call.enqueue(new Callback<DefaultResult>() {
             @Override
             public void onResponse(Call<DefaultResult> call, Response<DefaultResult> response) {
@@ -214,46 +225,71 @@ public class CrudDosenActivity extends AppCompatActivity {
         idDosen = extras.getString("id_dosen");
         nama.setText(extras.getString("nama_dosen"));
         nidn.setText(extras.getString("nidn"));
-        alamat.setText(extras.getString("alamatDosen"));
-        email.setText(extras.getString("emailDosen"));
-        gelar.setText(extras.getString("gelarDosen"));
+        alamat.setText(extras.getString("alamat"));
+        email.setText(extras.getString("email"));
+        gelar.setText(extras.getString("gelar"));
         foto.setText(extras.getString("foto"));
-        isUpdate = true;
     }
 
     private View.OnClickListener browseButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            pilihfoto();
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            String[] mimeTypes = {"image/jpeg"}; //UNTUK MEMILIH FOTO SAJA
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+            startActivityForResult(intent,GALLERY_REQUEST_CODE);
         }
     };
 
-    private static final int PICK_IMAGE = 1;
-    private static final int PERMISSION_REQUEST_STORAGE = 2;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode){
+            case FILE_ACCESS_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PERMISSION_GRANTED){
+                    //Permission Granted
+                }
+                break;
+        }
+    }
+
+
+    //private static final int PICK_IMAGE = 1;
+    //private static final int PERMISSION_REQUEST_STORAGE = 2;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case GALLERY_REQUEST_CODE:
+                    Uri selectedImage = data.getData();
+                    imgDosen.setImageURI(selectedImage);
 
-        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                uri = data.getData();
-                img.setImageURI(uri);
-            }
-        }
-        if (uri != null) {
-            try {
-                String path = getRealPathFromURI(uri);
-                Bitmap bitmap= BitmapFactory.decodeFile(path);
-                encodedImageData=getEncoded64ImageStringFromBitmap(bitmap);
-                foto.setText(encodedImageData);
-            } catch (Exception e) {
-                e.printStackTrace();
+                    //pakai string bitmap
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    //GET THE CURSOR
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    //move to first row
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String imgDecodableString = cursor.getString(columnIndex);
+//                    foto.setText(imgDecodableString);
+                    cursor.close();
+
+                    Bitmap bm = BitmapFactory.decodeFile(imgDecodableString);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] b = baos.toByteArray();
+
+                    stringImg = Base64.encodeToString(b, Base64.DEFAULT);
+                    break;
             }
         }
     }
 
-    @SuppressLint("ObsoleteSdkInt")
+
+    /* @SuppressLint("ObsoleteSdkInt")
     private String getRealPathFromURI(Uri contentURI) {
 
         String realPath="";
@@ -312,9 +348,9 @@ public class CrudDosenActivity extends AppCompatActivity {
 
     private void pilihfoto() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED
+                != PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+                != PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -330,5 +366,5 @@ public class CrudDosenActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE);
-    }
+    } */
 }

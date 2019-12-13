@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/txtAlamat"
@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/foto"
+            android:id="@+id/browse"
             android:layout_width="116dp"
             android:layout_height="117dp"
             android:layout_marginStart="8dp"
@@ -49,7 +49,7 @@
             app:srcCompat="@drawable/datadiri" />
 
         <TextView
-            android:id="@+id/txtNim"
+            android:id="@+id/nim"
             android:layout_width="82dp"
             android:layout_height="42dp"
             android:layout_marginStart="8dp"
@@ -64,7 +64,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txtNamaMatkul"
+            android:id="@+id/namaMhs"
             android:layout_width="176dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"

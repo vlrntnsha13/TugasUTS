@@ -1,26 +1,41 @@
 package com.example.tugasuts.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Mahasiswa {
-    public int mhsImage;
+
+    @SerializedName("idMhs")
+    @Expose
+    private String id;
+
+    @SerializedName("foto")
+    @Expose
+    private String mhsImage;
+
+    @SerializedName("nama")
+    @Expose
     private String nama;
+
+    @SerializedName("nim")
+    @Expose
     private String nim;
+
+    @SerializedName("email")
+    @Expose
     private String email;
+
+    @SerializedName("alamat")
+    @Expose
     private String alamat;
 
-    public Mahasiswa(int mhsImage, String nama, String nim, String email, String alamat) {
-        this.mhsImage = mhsImage;
+    public Mahasiswa(String id, String mhsImage, String nama, String nim, String email, String alamat) {
+        this.setId(id);
+        this.setMhsImage(mhsImage);
         this.nama = nama;
         this.nim = nim;
         this.setEmail(email);
         this.setAlamat(alamat);
-    }
-
-    public int getMhsImage() {
-        return mhsImage;
-    }
-
-    public void setMhsImage(int mhsImage) {
-        this.mhsImage = mhsImage;
     }
 
     public String getNama() {
@@ -52,5 +67,21 @@ public class Mahasiswa {
 
     public void setAlamat(String alamat) {
         this.alamat = alamat;
+    }
+
+    public String getMhsImage() {
+        return mhsImage;
+    }
+
+    public void setMhsImage(String mhsImage) {
+        this.mhsImage = mhsImage;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

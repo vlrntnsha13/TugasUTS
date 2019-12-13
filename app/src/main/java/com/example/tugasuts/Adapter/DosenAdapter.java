@@ -45,11 +45,11 @@ public class DosenAdapter  extends RecyclerView.Adapter<DosenAdapter.ViewHolder>
         holder.foto.getLayoutParams().height = 100;
         if (dosenArrayList.get(position).getFoto() !=null){
             Picasso.with(this.context)
-                    .load(dosenArrayList.get(position).getFoto())
+                    .load("https://kpsi.fti.ukdw.ac.id/progmob/"+dosenArrayList.get(position).getFoto())
                     .into(holder.foto);
         }
         holder.txtNama.setText(dosenArrayList.get(position).getNama());
-        holder.txtNim.setText(dosenArrayList.get(position).getNidn());
+        holder.txtNidn.setText(dosenArrayList.get(position).getNidn());
         holder.txtGelar.setText(dosenArrayList.get(position).getGelar());
         holder.txtEmail.setText(dosenArrayList.get(position).getEmail());
         holder.txtAlamat.setText(dosenArrayList.get(position).getAlamat());
@@ -65,16 +65,16 @@ public class DosenAdapter  extends RecyclerView.Adapter<DosenAdapter.ViewHolder>
         implements View.OnCreateContextMenuListener{
         ImageView foto;
         TextView txtNama;
-        TextView txtNim;
+        TextView txtNidn;
         TextView txtGelar;
         TextView txtEmail;
         TextView txtAlamat;
 
         public ViewHolder(View view){
             super(view);
-            foto = view.findViewById(R.id.foto);
-            txtNama = view.findViewById(R.id.txtNamaMatkul);
-            txtNim = view.findViewById(R.id.txtNidn);
+            foto = view.findViewById(R.id.browse);
+            txtNama = view.findViewById(R.id.namaMhs);
+            txtNidn = view.findViewById(R.id.txtNidn);
             txtGelar = view.findViewById(R.id.txtGelar);
             txtEmail = view.findViewById(R.id.txtEmail);
             txtAlamat = view.findViewById(R.id.txtAlamat);

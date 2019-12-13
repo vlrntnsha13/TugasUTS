@@ -14,7 +14,7 @@
         android:scrollbarSize="2dp">
 
         <ImageView
-            android:id="@+id/foto"
+            android:id="@+id/browse"
             android:layout_width="116dp"
             android:layout_height="123dp"
             android:layout_marginStart="8dp"
@@ -55,7 +55,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txtNamaMatkul"
+            android:id="@+id/namaMhs"
             android:layout_width="154dp"
             android:layout_height="26dp"
             android:layout_marginStart="8dp"

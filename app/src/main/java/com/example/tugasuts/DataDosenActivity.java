@@ -74,7 +74,7 @@ public class DataDosenActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Dosen dosen = dsnArrayList.get(item.getGroupId());
-        if (item.getTitle() == "Ubah Data Dosen") {
+        if (item.getTitle().equals("Ubah Data Dosen")) {
             Intent intent = new Intent(DataDosenActivity.this, CrudDosenActivity.class);
             intent.putExtra("id_dosen", dosen.getId());
             intent.putExtra("nama_dosen", dosen.getNama());
